@@ -80,8 +80,8 @@ for i in range(100000):
             touch.tap(x=910, y=1366).release().perform()
             time.sleep(2)
             touch.tap(x=910, y=1129).release().perform()
-            Id = (json.loads(response.text).get("id"))
-            time.sleep(30)
+            Id = (json.loads(response.text).get("آیدی"))
+            time.sleep(20)
             url2 = f'https://5sim.net/v1/user/check/{Id}'
             response_code = requests.get(url2)
             code = 0
