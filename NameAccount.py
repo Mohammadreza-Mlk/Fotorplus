@@ -8,9 +8,12 @@ import json
 import requests
 import random
 
+import random
+import time
+
 Account_names = [
-    "Emir", "Kerem", "Arda", "Can", "Ali", "Selim", "Ege", "Umut", "Baran", "Burak", "Deniz", "Yusuf", "Oğuz", "Kaan", "Mete", "Berk", "Cem", "Taylan", "Serkan", "Eren", "Ömer", "Alp", "Kuzey", "Kaya", "Orhan", "Hakan", "Mert", "Levent", "Volkan", "Tolga",
-    "Serdar", "Ertan", "Ferit", "lker", "Taner", "Emre", "Onur", "Halit", "Ilgın", "Akın", "Aarav", "Aryan", "Aditya", "Arjun", "Rohan", "Siddharth", "Akshay", "Virat", "Kunal", "Varun", "Aakash", "Rahul", "Dev", "Harsh", "Yash", "Aniket", "Kabir", "Rishi", "Arnav", "Karan",
+    "Emir", "Kerem", "Arda", "Can", "Ali", "Selim", "Ege", "Umut", "Baran", "Burak", "Deniz", "Yusuf", "Oğuz", "Kaan", "Mete", "Berk", "Cem", "Taylan", "Serkan", "Eren","Ömer", "Alp", "Kuzey", "Kaya", "Orhan", "Hakan", "Mert", "Levent", "Volkan", "Tolga",
+    "Serdar", "Ertan", "Ferit", "lker", "Taner", "Emre", "Onur", "Halit", "Ilgın", "Akın", "Aarav", "Aryan", "Aditya", "Arjun", "Rohan", "Siddharth", "Akshay", "Virat", "Kunal", "Varun","Aakash", "Rahul", "Dev", "Harsh", "Yash", "Aniket", "Kabir", "Rishi", "Arnav", "Karan",
     "Shivansh", "Jayden", "Ansh", "Vihaan", "Vedant", "Parth", "Krish", "Advait", "Ayaan", "Dhruv", "Neil", "Raghav", "Kabir", "Aadi", "Vivaan", "Arush", "Tanish", "Omkar", "Advik", "Shaurya",
     "Ishan", "Rehan", "Anshuman", "Vihaan", "Zayn", "Shreyansh", "Aarush", "Aryan", "Arnav", "Lakshya", "Adam", "Jakub", "Kacper", "Szymon", "Mateusz", "Michał", "Filip", "Aleksander", "Mikołaj", "Wojciech", "Paweł", "Jan", "Wiktor", "Igor", "Alan", "Adrian", "Patryk", "Damian", "Oskar", "Artur", "Łukasz", "Bartosz", "Piotr", "Daniel", "Krzysztof", "Marcel", "Hubert", "Tomasz", "Dominik", "Sebastian", "Kamil", "Dawid", "Jacek", "Rafał", "Karol", "Sławomir", "Grzegorz", "Igor", "Radosław", "Dariusz", "Łukasz", "Marek", "Bogdan", "Zbigniew", "Jarosław", "Aleks", "Konrad", "Krystian", "Arkadiusz", "Edward",
     "Erkan", "Cihan", "Tarkan", "Gokhan", "Serhat", "Sinan", "Kaan", "Murat", "Oktay", "Arif", "आरव", "आर्यन", "आदित्य",
@@ -37,5 +40,20 @@ cap: Dict[str, Any] = {
 url = 'http://localhost:4723'
 driver = webdriver.Remote(url, options=AppiumOptions().load_capabilities(cap))
 
-touch = TouchAction(driver)
+# random_names = RandomAccountNames[i]
+# print(random_names)
+# time.sleep(1.5)
+# NAmeInput = driver.find_element(by=AppiumBy.XPATH, value='//android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/android.widget.EditText')
+# NAmeInput.send_keys(random_names)
+# NAmeInputNextButton = driver.find_element(by=AppiumBy.XPATH, value='//android.widget.FrameLayout[@content-desc="Done"]/android.view.View')
+# NAmeInputNextButton.click()
 
+
+# ProfileInfoInSetNamePage = driver.find_element(by=AppiumBy.XPATH, value='//android.widget.TextView[@text="Profile info"]')
+# در بعضی کد کشور ها بعد از ثبت نام  یک ترم آف سرویس میاورد
+# TermOfService = driver.find_element(by=AppiumBy.XPATH,
+#                                   value='//android.widget.TextView[@text="Terms of Service"]')
+
+# TermOfServiceAccept = driver.find_element(by=AppiumBy.XPATH,
+#                                         value='//android.widget.TextView[@text="Accept"]')
+# TermOfServiceAccept.click()
