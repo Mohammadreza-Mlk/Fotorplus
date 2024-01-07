@@ -81,12 +81,17 @@ for i in range(1000):
                             NAmeInputNextButton.click()
 
                             # در بعضی کد کشور ها بعد از ثبت نام  یک ترم آف سرویس میاورد
-                            TermOfService = driver.find_element(by=AppiumBy.XPATH,
-                                                                value='//android.widget.TextView[@text="Terms of Service"]')
 
-                            TermOfServiceAccept = driver.find_element(by=AppiumBy.XPATH,
-                                                                      value='//android.widget.TextView[@text="Accept"]')
-                            TermOfServiceAccept.click()
+                            try:
+
+                                TermOfService = driver.find_element(by=AppiumBy.XPATH,
+                                                                    value='//android.widget.TextView[@text="Terms of Service"]')
+                                if TermOfService:
+                                    TermOfServiceAccept = driver.find_element(by=AppiumBy.XPATH,
+                                                                              value='//android.widget.TextView[@text="Accept"]')
+                                    TermOfServiceAccept.click()
+                            except Exception as e:
+                                print("Term of service not fount")
                     except Exception as e:
                         print("account created")
 
@@ -95,7 +100,9 @@ for i in range(1000):
                     #
 
                     # end create account
+                # دکمه هوم گوشی
 
+                # driver.press_keycode(3)
             except Exception as e:
                 print(f"Error: verification code not find {e}")
 
