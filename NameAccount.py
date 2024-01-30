@@ -8,7 +8,6 @@ import json
 import requests
 import random
 
-import random
 import time
 
 Account_names = [
@@ -29,19 +28,11 @@ Account_names = [
 
 # ایاد آرایه اسم تصادفی برای اکانت
 RandomAccountNames = random.sample(Account_names, 330)
-
-cap: Dict[str, Any] = {
-    'platformName': 'Android',
-    'automationName': 'uiautomator2',
-    'deviceName': 'Android',
-    'language': 'en',
-    'locale': 'us'
-}
-url = 'http://localhost:4723'
-driver = webdriver.Remote(url, options=AppiumOptions().load_capabilities(cap))
-
-# random_names = RandomAccountNames[i]
-# print(random_names)
+for i in range(330):
+    
+    random_names = RandomAccountNames[i]
+    print(random_names)
+    time.sleep(3)
 # time.sleep(1.5)
 # NAmeInput = driver.find_element(by=AppiumBy.XPATH, value='//android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.FrameLayout[1]/android.widget.EditText')
 # NAmeInput.send_keys(random_names)

@@ -21,6 +21,7 @@ for create_Account_Count in range(10000):
     for TelegramAppIndex in range(1, 4):
         # دکمه هوم گوشی
         driver.press_keycode(3)
+
         Telegram = driver.find_element(by=AppiumBy.XPATH,
                                        value=f'(//android.widget.ImageView[@resource-id="com.mi.android.globallauncher:id/icon_icon"])[{TelegramAppIndex}]')
 

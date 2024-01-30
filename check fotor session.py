@@ -22,23 +22,24 @@ NavigationMenu = driver.find_element(by=AppiumBy.XPATH,
                                      value='//android.widget.ImageView[@content-desc="Open navigation menu"]')
 NavigationMenu.click()
 time.sleep(2)
-touch.tap(x=374, y=1430).release().perform()
+touch.tap(x=374, y=1014).release().perform()
+time.sleep(2)
 
-start_point = {'x': 530, 'y': 1562}
+start_point = {'x': 530, 'y': 1200}
 
 # انتها
-end_point = {'x': 530, 'y': 460}
+end_point = {'x': 520, 'y': 300}
 touch.long_press(x=start_point['x'], y=start_point['y']).move_to(x=end_point['x'],
                                                                  y=end_point['y']).release().perform()
 Devices = driver.find_element(by=AppiumBy.XPATH,
                               value='//android.widget.FrameLayout[@text="Devices"]')
 Devices.click()
-
+time.sleep(2)
 touch.long_press(x=start_point['x'], y=start_point['y']).move_to(x=end_point['x'],
                                                                  y=end_point['y']).release().perform()
 
 FotorSession = driver.find_element(by=AppiumBy.XPATH,
-                                   value='(//android.widget.TextView[@text="Xiaomi POCO F1"])[1]')
+                                   value='(//android.widget.TextView[@text="membersgram2"])')
 if FotorSession:
     backButton = driver.find_element(by=AppiumBy.XPATH,
                                      value='//android.widget.ImageView[@content-desc="Go back"]')
