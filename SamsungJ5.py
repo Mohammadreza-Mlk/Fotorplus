@@ -36,12 +36,13 @@ caap: Dict[str, Any] = {
     'language': 'en',
     'locale': 'us'
 }
-url = 'http://localhost:4720'
+url = 'http://localhost:4721'
 
 driver_samsung_j5 = webdriver.Remote(url, options=AppiumOptions().load_capabilities(caap))
 touch = TouchAction(driver_samsung_j5)
 
 print("start create Account")
+
 
 for i in range(20):
     time.sleep(2)
@@ -72,277 +73,309 @@ for i in range(20):
             time.sleep(20)
 
             try:
+                input_google_box =  driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                  value='//android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout')
+                if input_google_box:
+                    
+                    input_google_box.send_keys("pnxdevices@gmail.com")
+                    time.sleep(1)
+                    touch.tap(x=600, y=550).release().perform()
+                    print("select the pnx@devices@gmail.cpm ")
+                    time.sleep(15)
+                    pnxEmail = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                  value='//android.widget.TextView[@resource-id="com.google.android.gms:id/account_name"]')
+                          
+                    pnxEmail.click()   
+            except:
+                print("Email box not found")
+            try:
                 VerificationInputBoxCodeTelegram = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
                                                                                   value='//android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.LinearLayout/android.widget.EditText[1]')
 
-                if VerificationInputBoxCodeTelegram:
-                    print("Phone Number IS Ok\033[0m")
-                    # گرفتن کد از Api
-                    print(f'{activationId}')
-
-                    for repeat_for_getCode in range(1, 11):
-                        time.sleep(20)
-                        RequestNumberOneVerifyCode = 'https://fotorplusapi.membersgram.com/getcode'
-                        headers = {
-                            'activationId': f'{activationId}'
-                        }
-                        response_verify = requests.get(RequestNumberOneVerifyCode, headers=headers)
-                        print(response_verify.text)
-                        response_verifyCode = json.loads(response_verify.text).get("status")
-                        if response_verifyCode == 'STATUS_WAIT_CODE':
-                            print(f'{repeat_for_getCode : }Verification code not received')
-                            if repeat_for_getCode == 10:
-                                time.sleep(2)
-                                CancelBuyPoneNumberApi = 'https://fotorplusapi.membersgram.com/cancelPurchase'
-                                CancelBuyRequest = requests.get(CancelBuyPoneNumberApi, headers=headers)
-                                time.sleep(2)
-                                driver_samsung_j5.press_keycode(4)
-                                if CancelBuyRequest.status_code == 200:
-                                    print(CancelBuyPoneNumberApi)
-
-                        else:
-                            print(' Verification code received.')
-                            response_codeTe = response_verify.text  # ذخیره محتوای دریافتی در متغیر
-                            print('Response ', response_codeTe)
-                            verificationcodeTel = json.loads(response_codeTe).get("data").get("smsCode")
-                            print(verificationcodeTel)
-                            break
-                    time.sleep(5)
-                    # وارد کردن کد
-                    VerificationInputBoxCodeTelegram.send_keys(verificationcodeTel)
-                    time.sleep(5)
-                    # چک کردن وجود داشتن باکس نام
-                    driver_samsung_j5.press_keycode(4)
-                    time.sleep(3)
-                    NAmeInput = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                               value='//android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.FrameLayout[1]/android.widget.EditText')
-                    random_names = RandomAccountNames[i]
-                    print(f'name tis account is : {random_names}')
-                    if NAmeInput:
-
-                        time.sleep(0.5)
-                        NAmeInput.send_keys(random_names)
-
-                        NAmeInputNextButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                             value='//android.widget.FrameLayout[@content-desc="Done"]/android.view.View')
-                        NAmeInputNextButton.click()
+                time.sleep(90)
+                print("stay fo 90 sec")
+                Get_the_code_via_SMS = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                  value='//android.widget.TextView[@text="Get the code via SMS"]')
+                
+                print("Get_the_code_via_SMS step")
+                if Get_the_code_via_SMS:
+                        Get_the_code_via_SMS.click() 
                         time.sleep(2)
+                        print("Get_the_code_via_SMS clicked")
+                  
+                try: 
+                    if VerificationInputBoxCodeTelegram:
+                        print("Phone Number IS Ok\033[0m")
+                        # گرفتن کد از Api
+                        print(f'{activationId}')
+                    
+                        if Get_the_code_via_SMS:
+                            Get_the_code_via_SMS.click()
+                            for repeat_for_getCode in range(1, 11):
+                                time.sleep(20)
+                                RequestNumberOneVerifyCode = 'https://fotorplusapi.membersgram.com/getcode'
+                                headers = {
+                                    'activationId': f'{activationId}'
+                                }
+                                response_verify = requests.get(RequestNumberOneVerifyCode, headers=headers)
+                                print(response_verify.text)
+                                response_verifyCode = json.loads(response_verify.text).get("status")
+                                if response_verifyCode == 'STATUS_WAIT_CODE':
+                                    print(f'{repeat_for_getCode : }Verification code not received')
+                                    if repeat_for_getCode == 10:
+                                        time.sleep(2)
+                                        CancelBuyPoneNumberApi = 'https://fotorplusapi.membersgram.com/cancelPurchase'
+                                        CancelBuyRequest = requests.get(CancelBuyPoneNumberApi, headers=headers)
+                                        time.sleep(2)
+                                        driver_samsung_j5.press_keycode(4)
+                                        if CancelBuyRequest.status_code == 200:
+                                            print(CancelBuyPoneNumberApi)
 
-                        # در بعضی کد کشور ها بعد از ثبت نام  یک ترم آف سرویس میاورد
+                                else:
+                                    print(' Verification code received.')
+                                    response_codeTe = response_verify.text  # ذخیره محتوای دریافتی در متغیر
+                                    print('Response ', response_codeTe)
+                                    verificationcodeTel = json.loads(response_codeTe).get("data").get("smsCode")
+                                    print(verificationcodeTel)
+                                    break
+                        time.sleep(5)
+                        # وارد کردن کد
+                        VerificationInputBoxCodeTelegram.send_keys(verificationcodeTel)
+                        time.sleep(5)
+                        # چک کردن وجود داشتن باکس نام
+                        driver_samsung_j5.press_keycode(4)
+                        time.sleep(3)
+                        NAmeInput = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                value='//android.widget.ScrollView/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout[2]/android.widget.LinearLayout/android.widget.FrameLayout[1]/android.widget.EditText')
+                        random_names = RandomAccountNames[i]
+                        print(f'name tis account is : {random_names}')
+                        if NAmeInput:
 
-                        try:
+                            time.sleep(0.5)
+                            NAmeInput.send_keys(random_names)
 
-                            TermOfService = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                           value='//android.widget.TextView[@text="Terms of Service"]')
-                            if TermOfService:
-                                TermOfServiceAccept = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                                     value='//android.widget.TextView[@text="Accept"]')
-                                TermOfServiceAccept.click()
-                        except:
-                            print("Term of service not fount")
-
-                        print("$$$$$$$$$   Account created   $$$$$$$$$$$")
-                        try:
-                            print("\033[32m***********  Start for FOTOR PLUS  *********** .\033[0m")
-                            time.sleep(10)
-
-                            #####################################
-                            #        مراحل فروش اکانت ـ        ##
-                            #####################################
-                            SearchButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                          value='//android.widget.ImageButton[@content-desc="Search"]/android.widget.ImageView')
-                            SearchButton.click()
-                            time.sleep(3)
-                            SearchInput = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                         value='//android.widget.EditText[@text="Search"]')
-                            SearchInput.send_keys("fotor_plus_bot")
-                            print("type fotor is ok")
-                            time.sleep(15)
-                            touch.tap(x=400, y=300).release().perform()
-                            time.sleep(5)
-                            touch.tap(x=346, y=1230).release().perform()  # for start button of the bot
-                            # BotKeyboard = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                            #                                           value='//android.widget.ImageView[@content-desc="Bot keyboard"]')
-                            # BotKeyboard.click()
-                            time.sleep(5)
-
-                            SellingAccount = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                            value='//android.widget.TextView[@text="Sending an account (selling an account)"]')
-                            SellingAccount.click()
-                            time.sleep(3)
-                            MessageBox = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                        value='//android.widget.EditText[@text="Message"]')
-                            time.sleep(5)
-
-                            MessageBox.send_keys(PhoneNumber1)
-
-                            SendMessageIcon = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                             value='//android.view.View[@content-desc="Send"]')
-                            SendMessageIcon.click()
-                            time.sleep(20)
-
-                            BackButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                        value='//android.widget.ImageView[@content-desc="Go back"]')
-                            BackButton.click()
-                            time.sleep(10)
-                            SearchButton.click()
-                            SearchInput.send_keys("telegram")
-                            time.sleep(2)
-                            touch.tap(x=400, y=250).release().perform()
-
-                            ##########
-                            ##########
-
-                            time.sleep(3)
-                            # press on the final telegram message
-                            touch.long_press(x=500, y=1100).release().perform()
-                            # tap on copy icon
-                            touch.tap(x=460, y=124).release().perform()
-                            time.sleep(1)
-                            BackButtonTelegramChat = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                                    value='//android.widget.ImageView[@content-desc="Go back"]')
-                            BackButtonTelegramChat.click()
+                            NAmeInputNextButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                value='//android.widget.FrameLayout[@content-desc="Done"]/android.view.View')
+                            NAmeInputNextButton.click()
                             time.sleep(2)
 
-                            SearchButton.click()
-                            time.sleep(2)
+                            # در بعضی کد کشور ها بعد از ثبت نام  یک ترم آف سرویس میاورد
 
-                            SearchInput.send_keys("fotor_plus_bot")
+                            try:
 
-                            time.sleep(5)
-                            print("type fotor is ok")
+                                TermOfService = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                            value='//android.widget.TextView[@text="Terms of Service"]')
+                                if TermOfService:
+                                    TermOfServiceAccept = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                        value='//android.widget.TextView[@text="Accept"]')
+                                    TermOfServiceAccept.click()
+                            except:
+                                print("Term of service not fount")
 
-                            touch.tap(x=400, y=300).release().perform()
-                            #######
-                            #######
-                            ######
-                            #########
-                            #########
-                            MessageBox = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                        value='//android.widget.EditText[@text="Message"]')
+                            print("$$$$$$$$$   Account created   $$$$$$$$$$$")
+                            try:
+                                print("\033[32m***********  Start for FOTOR PLUS  *********** .\033[0m")
+                                time.sleep(10)
 
-                            MessageBox.click()
-                            time.sleep(2)
+                                #####################################
+                                #        مراحل فروش اکانت ـ        ##
+                                #####################################
+                                SearchButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                            value='//android.widget.ImageButton[@content-desc="Search"]/android.widget.ImageView')
+                                SearchButton.click()
+                                time.sleep(3)
+                                SearchInput = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                            value='//android.widget.EditText[@text="Search"]')
+                                SearchInput.send_keys("fotor_plus_bot")
+                                print("type fotor is ok")
+                                time.sleep(15)
+                                touch.tap(x=400, y=300).release().perform()
+                                time.sleep(5)
+                                touch.tap(x=346, y=1230).release().perform()  # for start button of the bot
+                                # BotKeyboard = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                #                                           value='//android.widget.ImageView[@content-desc="Bot keyboard"]')
+                                # BotKeyboard.click()
+                                time.sleep(5)
 
-                            touch.long_press(x=245, y=610).release().perform()
-                            time.sleep(1)
+                                SellingAccount = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                value='//android.widget.TextView[@text="Sending an account (selling an account)"]')
+                                SellingAccount.click()
+                                time.sleep(3)
+                                MessageBox = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                            value='//android.widget.EditText[@text="Message"]')
+                                time.sleep(5)
 
-                            touch.tap(x=70, y=530).release().perform()
+                                MessageBox.send_keys(PhoneNumber1)
 
-                            time.sleep(2)
-                            print("message pasted")
-                            # پاک کردن اضافه پیام برای نمایان شدن متن کد
-                            for m in range(2):
-                                # location of mark massage to delete
-                                start_point = {'x': 120, 'y': 491}
-                                end_point = {'x': 400, 'y': 625}
+                                SendMessageIcon = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                value='//android.view.View[@content-desc="Send"]')
+                                SendMessageIcon.click()
+                                time.sleep(20)
 
-                                touch.long_press(x=start_point['x'], y=start_point['y']).move_to(x=end_point['x'],
-                                                                                                 y=end_point[
-                                                                                                     'y']).release().perform()
+                                BackButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                            value='//android.widget.ImageView[@content-desc="Go back"]')
+                                BackButton.click()
+                                time.sleep(10)
+                                SearchButton.click()
+                                SearchInput.send_keys("telegram")
+                                time.sleep(2)
+                                touch.tap(x=400, y=250).release().perform()
+
+                                ##########
+                                ##########
+
+                                time.sleep(3)
+                                # press on the final telegram message
+                                touch.long_press(x=500, y=1100).release().perform()
+                                # tap on copy icon
+                                touch.tap(x=460, y=124).release().perform()
+                                time.sleep(1)
+                                BackButtonTelegramChat = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                        value='//android.widget.ImageView[@content-desc="Go back"]')
+                                BackButtonTelegramChat.click()
+                                time.sleep(2)
+
+                                SearchButton.click()
+                                time.sleep(2)
+
+                                SearchInput.send_keys("fotor_plus_bot")
+
+                                time.sleep(5)
+                                print("type fotor is ok")
+
+                                touch.tap(x=400, y=300).release().perform()
+                                #######
+                                #######
+                                ######
+                                #########
+                                #########
+                                MessageBox = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                            value='//android.widget.EditText[@text="Message"]')
+
+                                MessageBox.click()
+                                time.sleep(2)
+
+                                touch.long_press(x=245, y=610).release().perform()
+                                time.sleep(1)
+
+                                touch.tap(x=70, y=530).release().perform()
+
+                                time.sleep(2)
+                                print("message pasted")
+                                # پاک کردن اضافه پیام برای نمایان شدن متن کد
+                                for m in range(2):
+                                    # location of mark massage to delete
+                                    start_point = {'x': 120, 'y': 491}
+                                    end_point = {'x': 400, 'y': 625}
+
+                                    touch.long_press(x=start_point['x'], y=start_point['y']).move_to(x=end_point['x'],
+                                                                                                    y=end_point[
+                                                                                                        'y']).release().perform()
+                                    touch.tap(x=660, y=1100).release().perform()
+
+                                touch.tap(x=350, y=444).release().perform()
+                                touch.long_press(x=350, y=444).release().perform()
+                                touch.tap(x=272, y=350).release().perform()
+                                startClearAll = {'x': 117, 'y': 435}
+                                endClearAll = {'x': 530, 'y': 622}
+
+                                touch.long_press(x=startClearAll['x'], y=startClearAll['y']).move_to(x=endClearAll['x'],
+                                                                                                    y=endClearAll[
+                                                                                                        'y']).release().perform()
+
                                 touch.tap(x=660, y=1100).release().perform()
+                                touch.long_press(x=660, y=1100).release().perform()
+                                MessageBox.send_keys("fotor_")
+                                # long press for open the menu for paste button
+                                touch.long_press(x=300, y=607).release().perform()
+                                # tap on paste button
+                                touch.tap(x=103, y=531).release().perform()
+                                touch.tap(x=245, y=607).release().perform()
+                                time.sleep(1)
+                                SendButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                            value='//android.view.View[@content-desc="Send"]')
+                                SendButton.click()
+                                time.sleep(2)
+                                touch.tap(x=54, y=106).release().perform()
 
-                            touch.tap(x=350, y=444).release().perform()
-                            touch.long_press(x=350, y=444).release().perform()
-                            touch.tap(x=272, y=350).release().perform()
-                            startClearAll = {'x': 117, 'y': 435}
-                            endClearAll = {'x': 530, 'y': 622}
-
-                            touch.long_press(x=startClearAll['x'], y=startClearAll['y']).move_to(x=endClearAll['x'],
-                                                                                                 y=endClearAll[
-                                                                                                     'y']).release().perform()
-
-                            touch.tap(x=660, y=1100).release().perform()
-                            touch.long_press(x=660, y=1100).release().perform()
-                            MessageBox.send_keys("fotor_")
-                            # long press for open the menu for paste button
-                            touch.long_press(x=300, y=607).release().perform()
-                            # tap on paste button
-                            touch.tap(x=103, y=531).release().perform()
-                            touch.tap(x=245, y=607).release().perform()
-                            time.sleep(1)
-                            SendButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                        value='//android.view.View[@content-desc="Send"]')
-                            SendButton.click()
-                            time.sleep(2)
-                            touch.tap(x=54, y=106).release().perform()
-
-                            try:  # log out from account
-                                time.sleep(2)
-
-                                NavigationMenu = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                                value='//android.widget.ImageView[@content-desc="Open navigation menu"]')
-                                NavigationMenu.click()
-                                time.sleep(2)
-                                touch.tap(x=300, y=985).release().perform()
-                                time.sleep(2)
-                                start_point = {'x': 530, 'y': 1000}
-                                # انتها
-                                end_point = {'x': 520, 'y': 300}
-                                touch.long_press(x=start_point['x'], y=start_point['y']).move_to(x=end_point['x'],
-                                                                                                 y=end_point['y']).release().perform()
-                                time.sleep(2)
-                                Devices = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                         value='//android.widget.FrameLayout[@text="Devices"]')
-                                Devices.click()
-                                time.sleep(2)
-                                touch.long_press(x=start_point['x'], y=start_point['y']).move_to(x=end_point['x'],
-                                                                                                 y=end_point['y']).release().perform()
-
-                                time.sleep(2)
-                                FotorSession = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                              value='(//android.widget.TextView[@text="membersgram2"])')
-                                time.sleep(2)
-                                if FotorSession:
-                                    backButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                                value='//android.widget.ImageView[@content-desc="Go back"]')
-                                    backButton.click()
+                                try:  # log out from account
                                     time.sleep(2)
-                                    CircleForOpenMenu = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                                       value='//android.widget.ImageButton[@content-desc="More options"]/android.widget.ImageView')
-                                    CircleForOpenMenu.click()
+
+                                    NavigationMenu = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                    value='//android.widget.ImageView[@content-desc="Open navigation menu"]')
+                                    NavigationMenu.click()
                                     time.sleep(2)
-                                    LogOutInMenu = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                                  value='//android.widget.TextView[@text="Log Out"]')
+                                    touch.tap(x=300, y=985).release().perform()
                                     time.sleep(2)
-                                    LogOutInMenu.click()
+                                    start_point = {'x': 530, 'y': 1000}
+                                    # انتها
+                                    end_point = {'x': 520, 'y': 300}
+                                    touch.long_press(x=start_point['x'], y=start_point['y']).move_to(x=end_point['x'],
+                                                                                                    y=end_point['y']).release().perform()
                                     time.sleep(2)
-                                    LogOutInMenu2 = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                                   value='(//android.widget.TextView[@text="Log Out"])[2]')
-                                    LogOutInMenu2.click()
+                                    Devices = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                            value='//android.widget.FrameLayout[@text="Devices"]')
+                                    Devices.click()
                                     time.sleep(2)
-                                    LogOutInDialogBOx = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                                       value='(//android.widget.TextView[@text="Log Out"])[2]')
-                                    LogOutInDialogBOx.click()
-                                    time.sleep(20)
-                                    print('selling be OK :)')
-                                    Start_Message = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
-                                                                                   value='//android.widget.TextView[@text="Start Messaging"]')
-                                    Start_Message.click()
-                                    
+                                    touch.long_press(x=start_point['x'], y=start_point['y']).move_to(x=end_point['x'],
+                                                                                                    y=end_point['y']).release().perform()
+
+                                    time.sleep(2)
+                                    FotorSession = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                value='(//android.widget.TextView[@text="membersgram2"])')
+                                    time.sleep(2)
+                                    if FotorSession:
+                                        backButton = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                    value='//android.widget.ImageView[@content-desc="Go back"]')
+                                        backButton.click()
+                                        time.sleep(2)
+                                        CircleForOpenMenu = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                        value='//android.widget.ImageButton[@content-desc="More options"]/android.widget.ImageView')
+                                        CircleForOpenMenu.click()
+                                        time.sleep(2)
+                                        LogOutInMenu = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                    value='//android.widget.TextView[@text="Log Out"]')
+                                        time.sleep(2)
+                                        LogOutInMenu.click()
+                                        time.sleep(2)
+                                        LogOutInMenu2 = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                    value='(//android.widget.TextView[@text="Log Out"])[2]')
+                                        LogOutInMenu2.click()
+                                        time.sleep(2)
+                                        LogOutInDialogBOx = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                        value='(//android.widget.TextView[@text="Log Out"])[2]')
+                                        LogOutInDialogBOx.click()
+                                        time.sleep(20)
+                                        print('selling be OK :)')
+                                        Start_Message = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
+                                                                                    value='//android.widget.TextView[@text="Start Messaging"]')
+                                        Start_Message.click()
+                                        
+
+                                except:
+                                    print("log out faild")
+
 
                             except:
-                                print("log out faild")
+                                print(f'sell Account {PhoneNumber1} failed')
 
 
-                        except:
-                            print(f'sell Account {PhoneNumber1} failed')
+                    ############ اینجا مراحل  پاک کرد  و درخواست مجدد برای شماره اجرا شود
 
+                    #
 
-                ############ اینجا مراحل  پاک کرد  و درخواست مجدد برای شماره اجرا شود
+                    #
 
-                #
+                    # end create account
+                    # دکمه هوم گوشی
 
-                #
-
-                # end create account
-                # دکمه هوم گوشی
-
-                # driver.press_keycode(3)
-                else:
-                    print("\033[31mPhone Number is not be OK!.\033[0m")
+                    # driver.press_keycode(3)
+                    else:
+                        print("\033[31mPhone Number is not be OK!.\033[0m")
+                except:
+                    print("Error: verification code not find ")
             except:
-                print("Error: verification code not find ")
+                print("Error: Get_the_code_via_SMS not find ")
             try:
                 PhoneNumberBanned = driver_samsung_j5.find_element(by=AppiumBy.XPATH,
                                                                    value='//android.widget.TextView[@text="This phone number is banned."]')
