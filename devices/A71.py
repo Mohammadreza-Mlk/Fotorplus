@@ -127,9 +127,7 @@ for i in range(20):
                     for repeat_for_getCode in range(1, 11):
                         time.sleep(20)
                         RequestNumberOneVerifyCode = 'https://fotorplusapi.membersgram.com/getcode'
-                        headers = {
-                            'activationId': f'{activationId}'
-                        }
+                        headers = {'activationId': f'{activationId}'}
                         response_verify = requests.get(RequestNumberOneVerifyCode, headers=headers)
                         print(response_verify.text)
                         response_verifyCode = json.loads(response_verify.text).get("status")
