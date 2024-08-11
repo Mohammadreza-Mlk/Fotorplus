@@ -3,15 +3,13 @@ from typing import Any, Dict
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.common.touch_action import TouchAction
-import sys, time
+import sys, time, os
+from appium.options.android import UiAutomator2Options
+
 sys.path.append("../TelegramAuto")
-import os
 
 # اضافه کردن مسیر والد دایرکتوری جاری به sys.path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
-
-
-
 # from function.checkForCallingCode import check_For_Calling_Code
 from function.installTelegram import InstallTelegram
 from function.CallingNew import Calling
@@ -36,10 +34,20 @@ cap: Dict[str, Any] = {
     'language': 'en',
     'locale': 'us'
 }
-url = 'http://localhost:4721'
+appium_server = 'http://localhost:4721'
 
- 
-driver_SamsungA71 = webdriver.Remote(url, options=AppiumOptions().load_capabilities(cap))
+desired_caps: Dict[str, Any] = {
+    'platformName': 'Android',
+    'automationName': 'uiautomator2',
+    'deviceName': 'SamsungA71',
+    "platformVersion": "13.0",
+    'language': 'en',
+    'locale': 'us'
+}
+appium_options = UiAutomator2Options().load_capabilities(desired_caps)
+driver_SamsungA71 = webdriver.Remote(appium_server, options=appium_options)
+   
+# driver_SamsungA71 = webdriver.Remote(url, options=AppiumOptions().load_capabilities(cap))
 touch = TouchAction(driver_SamsungA71)
 phoneNumber = ""
 activationId = ""
@@ -50,13 +58,13 @@ activationId = ""
 time.sleep(1)
 TelegramApp = InstallTelegram(driver_SamsungA71) 
 time.sleep(2)
-Permission(driver_SamsungA71)
+# Permission(driver_SamsungA71)
 print("start create Account")
 for i in range(20):
              
     # for i in range(1):
     try:
-        time.sleep(5)
+        time.sleep(1)
         StartMessage = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                     value='//android.widget.TextView[@text="Start Messaging"]')
         StartMessage.click()
@@ -89,11 +97,11 @@ for i in range(20):
         
     except:
         print("PhoneNumberInput not found")
-    time.sleep(2)
+    time.sleep(0.5)
     TooManyAttempts(driver_SamsungA71)
-    time.sleep(2)
+    time.sleep(0.5)
     InvalidPhonenNumber(driver_SamsungA71)
-    time.sleep(2)
+    time.sleep(0.5)
     resultBan = PhonenNumberBan(driver_SamsungA71)
     if not resultBan :
         time.sleep(3)

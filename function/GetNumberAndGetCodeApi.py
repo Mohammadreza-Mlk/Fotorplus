@@ -4,7 +4,7 @@ from typing import Any, Dict
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.common.touch_action import TouchAction
-
+from another.CancelApi import CancelNumber
 sys.path.append("../TelegramAuto")
 from function.UnistallApp import UnistalTelegram
 from function.installTelegram import InstallTelegram
@@ -44,6 +44,7 @@ def GetNumberApi():
 
 def GetVerifycode(activationId, driver_SamsungA71):
     # verifyCode = ""
+    activationId = "229482604"
     print('activation =' f'{activationId}')
     touch = TouchAction(driver_SamsungA71)
 
@@ -56,25 +57,14 @@ def GetVerifycode(activationId, driver_SamsungA71):
         response_verifyCode = json.loads(response_verify.text).get("status")
         
         if response_verifyCode == 'STATUS_WAIT_CODE':
-            print(f'{response_verifyCode}   ')
-            if repeat_for_getCode == 11:
+            print(f'{repeat_for_getCode} : {response_verifyCode}   ')
+            if repeat_for_getCode == 4:
+                CancelNumber(activationId)
+                
                 print("CancelBuyPoneNumberApi")
                 time.sleep(2)
-                CancelBuyPoneNumberApi = 'https://fotorplusapi.membersgram.com/cancelPurchase'
-                CancelBuyRequest = requests.get(CancelBuyPoneNumberApi, headers=headers)
-                time.sleep(2)
-                response_canscel = json.loads(CancelBuyRequest.text).get("status")
-                time.sleep(2)
-                
                 driver_SamsungA71.press_keycode(3)
-                
-                time.sleep(2)
                 UnistalTelegram(driver_SamsungA71)
-                print(CancelBuyRequest.text)
-                print(response_canscel)
-                
-                
-                time.sleep(15)
                 InstallTelegram(driver_SamsungA71)
                 
         else:

@@ -36,7 +36,8 @@ def PhonenNumberBan(driver_SamsungA71):
                                                     value='//android.view.ViewGroup/android.widget.ImageView')
 
             for BackspaceButtonCount in range(2):
-                touch.long_press(BackspaceButton).wait(1).release().perform()
+                element_coord = BackspaceButton.location
+                driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+1, 'y': element_coord['y']+1, 'duration': 1300})
             return True
     except :
         print("####  Phone number  is not banned ####")
@@ -59,11 +60,14 @@ def InvalidPhonenNumber(driver_SamsungA71):
                                                     value='//android.widget.TextView[@text="OK"]')
             print("InvalidPhonenNumber")
             okButtonBanned.click()
+            time.sleep(1)
             BackspaceButton = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                     value='//android.view.ViewGroup/android.widget.ImageView')
 
             for BackspaceButtonCount in range(2):
-                touch.long_press(BackspaceButton).wait(1).release().perform()
+                element_coord = BackspaceButton.location
+                driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+1, 'y': element_coord['y']+1, 'duration': 1300})
+                # touch.long_press(BackspaceButton).wait(1).release().perform()
             return True
     except :
         print("####  Phone number  is True  ####")

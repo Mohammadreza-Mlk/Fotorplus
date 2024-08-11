@@ -41,7 +41,8 @@ def check_for_send_verify_code_to_another_telegram_sesseion(driver_SamsungA71):
             time.sleep(2)
             backspaceButtonInKeybord = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                             value='//android.view.ViewGroup/android.widget.ImageView')
-            touch.long_press(backspaceButtonInKeybord).release().perform()
+            element_coord = backspaceButtonInKeybord.location
+            driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+1, 'y': element_coord['y']+1, 'duration': 1300})
             
             return True
         return False

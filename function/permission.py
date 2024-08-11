@@ -21,29 +21,21 @@ def Permission(driver_SamsungA71):
 
     touch = TouchAction(driver_SamsungA71)
 
-    time.sleep(3)
-    TelegamApp = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
+    time.sleep(1)
+    TelegramApp = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                 value='//android.widget.TextView[@content-desc="Telegram"]')
-    time.sleep(3)
-    touch.long_press(TelegamApp).release().perform()
-
-    time.sleep(2.5)
     
-    # TelegamApp = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
-    #                                             value='//android.widget.TextView[@content-desc="Telegram"]')
+    element_coord = TelegramApp.location
+    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+100, 'y': element_coord['y']+100, 'duration': 1300})
 
-    # time.sleep(3)
-    # touch.long_press(TelegamApp).release().perform()
-
-    # time.sleep(3)
-    
+    time.sleep(2)    
 
     AppInfo = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                 value='//android.widget.ImageView[@content-desc="App info"]')
-    time.sleep(2.5)
+    time.sleep(1)
     AppInfo.click()
-
-    time.sleep(2.5)
+    
+    driver_SamsungA71.implicitly_wait(10)
     Permision = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                 value='//android.widget.TextView[@resource-id="android:id/title" and @text="Permissions"]')
     time.sleep(2.5)
@@ -66,7 +58,8 @@ def Permission(driver_SamsungA71):
     start_y = 800  
     end_x = 801  
     end_y = 200  
-    touch.press(x=start_x, y=start_y).move_to(x=end_x, y=end_y).release().perform()
+     
+    driver_SamsungA71.swipe(start_x, start_y, end_x, end_y, duration=200)
 
 
     time.sleep(2.5)
@@ -96,7 +89,7 @@ def Permission(driver_SamsungA71):
 
     time.sleep(3)  
     
-    TelegamApp.click()
+    TelegramApp.click()
     try:
         driver_SamsungA71.implicitly_wait(15)  
         AppUpdateTelegram  = driver_SamsungA71.find_element(by=AppiumBy.XPATH,

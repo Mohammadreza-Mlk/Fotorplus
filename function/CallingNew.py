@@ -42,11 +42,11 @@ def Calling(driver_SamsungA71, activationId, phoneNumber):
             
             UnistalTelegram(driver_SamsungA71)
                     
-            # UnistalTelegram(driver_SamsungA71)
-            # time.sleep(120)
-            # CancelBuyPoneNumberApi = 'https://fotorplusapi.membersgram.com/cancelPurchase'
-            # CancelBuyRequest = requests.get(CancelBuyPoneNumberApi, headers=headers)
-            # print(CancelBuyRequest.text)
+            
+            time.sleep(120)
+            CancelBuyPoneNumberApi = 'https://fotorplusapi.membersgram.com/cancelPurchase'
+            CancelBuyRequest = requests.get(CancelBuyPoneNumberApi, headers=headers)
+            print(CancelBuyRequest.text)
             time.sleep(5)
             InstallTelegram(driver_SamsungA71)
 

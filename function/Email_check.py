@@ -43,8 +43,17 @@ def Email_check(driver_SamsungA71, TelegramApp):
     
     try:
         time.sleep(2)
-        NeedEmail = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
-                                            value='//android.widget.TextView[@text="Choose a login email"]')
+        try:
+            NeedEmail = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
+                                                value='//android.widget.TextView[@text="Choose a login email"]')
+        except:
+            print()
+        try:
+            NeedEmail = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
+                                                value='//android.widget.TextView[@text="Add Email"]')
+        except:
+            print()
+
         if NeedEmail:
             time.sleep(3)
             NumberOfEmail = [1, 2, 3, 4, 5]
@@ -85,9 +94,9 @@ def Email_check(driver_SamsungA71, TelegramApp):
         except:
             print(" gmail notif not found")
         if gmailAppNotif or gmailApp :
+            
             time.sleep(5)
-            touch.tap(x=960, y=180).release().perform()
-
+            driver_SamsungA71.tap([(960, 180)])
             time.sleep(3)
             try:
                 EmailForGetCode = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
@@ -116,14 +125,15 @@ def Email_check(driver_SamsungA71, TelegramApp):
                     NotanksButton.click()
             except:
                 print("")
-            touch.tap(x=500, y=500).release().perform()
+            driver_SamsungA71.tap([(500, 500)])
             time.sleep(3)
             
-            
-            touch.long_press(x=385, y=840).release().perform()
-            time.sleep(3)
+            driver_SamsungA71.execute_script('mobile: longClickGesture', {'x':385, 'y': 840, 'duration': 1000})
 
-            touch.tap(x=120, y=780).release().perform()
+            # touch.long_press(x=385, y=840).release().perform()
+            time.sleep(3)
+            driver_SamsungA71.tap([(120, 780)])
+            # touch.tap(x=120, y=780).release().perform()
             time.sleep(3)
 
             Back_in_email_chat = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
@@ -136,9 +146,11 @@ def Email_check(driver_SamsungA71, TelegramApp):
                                                                 value='//android.widget.TextView[@content-desc="Telegram"]')
             TelegramApp.click()
             time.sleep(2)
-            touch.long_press(x=270, y=950).release().perform()
+            driver_SamsungA71.execute_script('mobile: longClickGesture', {'x':270, 'y': 950, 'duration': 1000})
+            # touch.long_press(x=270, y=950).release().perform()
             time.sleep(1)
-            touch.tap(x=240, y=824).release().perform()
+            driver_SamsungA71.tap([(240, 824)])
+            # touch.tap(x=240, y=824).release().perform()
             
                     
             # EmailNotAllowed = driver_SamsungA71.find_element(by=AppiumBy.XPATH,

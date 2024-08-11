@@ -22,20 +22,21 @@ def InstallTelegram(driver_SamsungA71):
     driver_SamsungA71.implicitly_wait(3)
     print("Start Install telegram")
     time.sleep(4)
-    touch.tap(x=165, y=1385).release().perform()
+    driver_SamsungA71.tap([(165, 1385)])
+     
 
-    time.sleep(4)
+    driver_SamsungA71.implicitly_wait(10) 
     InstallButton = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                 value='//android.widget.Button[@resource-id="android:id/button1"]')
     
     InstallButton.click()
-    time.sleep(15)
+    time.sleep(15) 
     
     DoneButton = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                 value='//android.widget.Button[@resource-id="android:id/button2"]')
     if DoneButton:
     #     print("DoneButton founde")
-    #     time.sleep(9.5)
+        
         DoneButton.click()
         print("telegram installed")
     # touch.tap(x=400, y=600).release().perform()
@@ -48,11 +49,13 @@ def InstallTelegram(driver_SamsungA71):
     end_x = 801  
     end_y = 500  
     driver_SamsungA71.swipe(start_x, start_y, end_x, end_y, duration=200)
-
+ 
     time.sleep(2)
     TelegramApp = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                 value='//android.widget.TextView[@content-desc="Telegram"]')
-    touch.long_press(TelegramApp).release().perform()
+    element_coord = TelegramApp.location
+    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+150, 'y': element_coord['y']+150, 'duration': 1500})
+    # touch.long_press(TelegramApp).release().perform()
     time.sleep(2)
     
     
