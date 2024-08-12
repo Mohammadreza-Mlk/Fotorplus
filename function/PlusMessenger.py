@@ -2,6 +2,8 @@ import time
 from appium import webdriver
 from typing import Any, Dict, sys
 from appium.options.common import AppiumOptions
+from appium.options.android import UiAutomator2Options
+
 from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.common.touch_action import TouchAction
 import sys, time
@@ -40,9 +42,20 @@ def PlusMessanger(driver_SamsungA71, phoneNumber, TelegramApp):
                                                 value='//android.widget.TextView[@text="Turn on notifications"]')
         if NotificationError:
             time.sleep(2)
-            touch.tap(x=550, y=900).release().perform()
+            driver_SamsungA71.tap([(550, 900)])
     except:
         print("Notif not found")
+    try:
+        time.sleep(5)
+        Themes = driver_SamsungA71.find_element(by=AppiumBy.XPATH,value='//android.widget.TextView[@text="Themes"]')
+        if Themes:
+                 time.sleep(2)
+                 Cancel =   driver_SamsungA71.find_element(by=AppiumBy.XPATH,
+                                                           value='//android.widget.TextView[@text="Cancel"]') 
+                 Cancel.click()                                
+
+    except:
+         print('')
     time.sleep(2)
     NavigationMenu = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                             value='//android.widget.ImageView[@content-desc="Open navigation menu"]')
@@ -97,17 +110,19 @@ def PlusMessanger(driver_SamsungA71, phoneNumber, TelegramApp):
 
     SearchInput.send_keys("telegram ")
     time.sleep(5)
-    touch.tap(x=400, y=350).release().perform()
+    driver_SamsungA71.tap([(400, 350)])
+    
 
     ##########
     ##########
 
     time.sleep(3)
     # press on the final telegram message
-    touch.long_press(x=500, y=1800).release().perform()
+    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': 500, 'y': 1800, 'duration': 1000})
+    # touch.long_press(x=500, y=1800).release().perform()
     time.sleep(4)
     # tap on copy icon
-    touch.tap(x=750, y=170).release().perform()
+    driver_SamsungA71.tap([(750, 170)])
     time.sleep(4)
     print("code copied")
 
@@ -115,31 +130,38 @@ def PlusMessanger(driver_SamsungA71, phoneNumber, TelegramApp):
 
     MessageBox.click()
     time.sleep(2)
-
-    touch.long_press(MessageBox).release().perform()
+    element_coord = MessageBox.location
+    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+5, 'y': element_coord['y']+5, 'duration': 1500})
+    #   touch.long_press(MessageBox).release().perform()
     time.sleep(1)
-
-    touch.tap(x=150, y=1240).release().perform()
+    driver_SamsungA71.tap([(150, 1240)])
+    # touch.tap(x=150, y=1240).release().perform()
 
     time.sleep(2)
     print("message pasted")
     time.sleep(2)
 
+     
+    for m in range(60):
+        # location of mark massage to delete
+        driver_SamsungA71.long_press_keycode(67)
+    time.sleep(1)   
+     
+    driver_SamsungA71.tap([(460, 1070)])
+    time.sleep(1)
+
+    
+    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': 460, 'y': 1072, 'duration': 1000})
+   
 
 
-    for m in range(2):
-            # location of mark massage to delete
-            start_point = {'x': 155, 'y': 1235}
-            end_point = {'x': 960, 'y': 1360}
 
-            touch.long_press(x=start_point['x'], y=start_point['y']).move_to(x=end_point['x'], y=end_point['y']).release().perform()
-            touch.tap(x=1000, y=2000).release().perform()
-            touch.tap(x=1000, y=2000).release().perform()
-            touch.tap(x=1000, y=2000).release().perform()
-
-    touch.tap(x=450, y=1235).release().perform()
-    touch.long_press(x=440, y=1235).release().perform()
-    touch.tap(x=370, y=1130).release().perform()
+    driver_SamsungA71.tap([(450, 1235)])
+    # touch.tap(x=450, y=1235).release().perform()
+    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': 450, 'y': 1235, 'duration': 1000})
+    # touch.long_press(x=440, y=1235).release().perform()
+    driver_SamsungA71.tap([(370, 1130)])
+    
 
     time.sleep(2)
     driver_SamsungA71.press_keycode(3)
@@ -150,8 +172,10 @@ def PlusMessanger(driver_SamsungA71, phoneNumber, TelegramApp):
     time.sleep(2)
     PlusMessage.click()
     time.sleep(2)
-    touch.long_press(x=320, y=1077).release().perform()
-    touch.tap(x=320, y=930).release().perform()
+    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': 320, 'y': 1077, 'duration': 1000})
+    # touch.long_press(x=320, y=1077).release().perform()
+    driver_SamsungA71.tap([(320, 930)])
+    # touch.tap(x=320, y=930).release().perform()
 
     time.sleep(19)    
     # try:
@@ -175,7 +199,8 @@ def PlusMessanger(driver_SamsungA71, phoneNumber, TelegramApp):
                                                 value='//android.widget.TextView[@text="Turn on notifications"]')
         if NotificationError:
             time.sleep(2)
-            touch.tap(x=550, y=900).release().perform()
+            driver_SamsungA71.tap([(550, 900)])
+            # touch.tap(x=550, y=900).release().perform()
     except:
         print("Notif not found")
     time.sleep(4)
@@ -220,7 +245,5 @@ def PlusMessanger(driver_SamsungA71, phoneNumber, TelegramApp):
 
     time.sleep(4)
     InstallTelegram(driver_SamsungA71)
-
-    time.sleep(4)
-    Permission(driver_SamsungA71)
+ 
         

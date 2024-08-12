@@ -5,16 +5,7 @@ from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.common.touch_action import TouchAction
 import sys, time
 sys.path.append("../TelegramAuto")
-from function.checkForCallingCode import check_For_Calling_Code
-from function.check_for_send_verify_code_to_another_telegram_sesseion import check_for_send_verify_code_to_another_telegram_sesseion
-from function.Email_check import Email_check
-from function.GetNumberAndGetCodeApi import GetNumberApi
-from function.PhoneNumberIsBan import PhonenNumberBan
-from function.CheckVerfiCodeSms import Check_Verify_code
-from function.NameAccount import RandomName
-from function.TooManyAttempts import TooManyAttempts
-from function.FotorPlus import FotorPlus
-from function.LogOut import LogOut
+
 
 
 def Permission(driver_SamsungA71):
@@ -26,7 +17,7 @@ def Permission(driver_SamsungA71):
                                                 value='//android.widget.TextView[@content-desc="Telegram"]')
     
     element_coord = TelegramApp.location
-    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+100, 'y': element_coord['y']+100, 'duration': 1300})
+    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+100, 'y': element_coord['y']+100, 'duration': 1100})
 
     time.sleep(2)    
 

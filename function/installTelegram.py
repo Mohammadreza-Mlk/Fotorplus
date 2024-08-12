@@ -4,7 +4,7 @@ from appium.webdriver.common.appiumby import AppiumBy
 from appium.webdriver.common.touch_action import TouchAction
 import sys, time
 sys.path.append("../TelegramAuto")
-
+from function.permission import Permission
 cap: Dict[str, Any] = {
     'platformName': 'Android',
     'automationName': 'uiautomator2',
@@ -58,7 +58,7 @@ def InstallTelegram(driver_SamsungA71):
     # touch.long_press(TelegramApp).release().perform()
     time.sleep(2)
     
-    
+    Permission(driver_SamsungA71)
     # Permission(driver_SamsungA71, touch)
     
     

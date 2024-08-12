@@ -8,6 +8,7 @@ from another.CancelApi import CancelNumber
 sys.path.append("../TelegramAuto")
 from function.UnistallApp import UnistalTelegram
 from function.installTelegram import InstallTelegram
+from function.permission import Permission
 url = 'http://localhost:4721'
 
 cap: Dict[str, Any] = {
@@ -44,38 +45,41 @@ def GetNumberApi():
 
 def GetVerifycode(activationId, driver_SamsungA71):
     # verifyCode = ""
-    activationId = "229482604"
+    
     print('activation =' f'{activationId}')
     touch = TouchAction(driver_SamsungA71)
 
-    for repeat_for_getCode in range(1, 12):
-        time.sleep(15)
-        RequestForVerifyCode = 'https://fotorplusapi.membersgram.com/getcode'
-        headers = {'activationId': f'{activationId}'}
-        response_verify = requests.get(RequestForVerifyCode, headers=headers)
-        print(response_verify.text)
-        response_verifyCode = json.loads(response_verify.text).get("status")
-        
-        if response_verifyCode == 'STATUS_WAIT_CODE':
-            print(f'{repeat_for_getCode} : {response_verifyCode}   ')
-            if repeat_for_getCode == 4:
-                CancelNumber(activationId)
-                
-                print("CancelBuyPoneNumberApi")
-                time.sleep(2)
-                driver_SamsungA71.press_keycode(3)
-                UnistalTelegram(driver_SamsungA71)
-                InstallTelegram(driver_SamsungA71)
-                
-        else:
-            print(' Verification code received.')
-            response_codeTe = response_verify.text  # ذخیره محتوای دریافتی در متغیر
-            print('Response ', response_codeTe)
-            verificationcodeTel = json.loads(response_codeTe).get("data").get("smsCode")
-            print(verificationcodeTel)
-            break
-            
+
+
+
+
+
+
+    time.sleep(15)
+    RequestForVerifyCode = 'https://fotorplusapi.membersgram.com/getcode'
+    headers = {'activationId': f'{activationId}'}
+    response_verify = requests.get(RequestForVerifyCode, headers=headers)
+    print(response_verify.text)
+    response_verifyCode = json.loads(response_verify.text).get("status")
     
+    if response_verifyCode == 'STATUS_WAIT_CODE':
+        print(f'   {response_verifyCode}   ')
+         
+        
+        time.sleep(2)
+        driver_SamsungA71.press_keycode(3)
+        UnistalTelegram(driver_SamsungA71)
+        InstallTelegram(driver_SamsungA71)
+        Permission(driver_SamsungA71)
+        
+            
+    else:
+        print(' Verification code received.')
+        response_codeTe = response_verify.text  # ذخیره محتوای دریافتی در متغیر
+        print('Response ', response_codeTe)
+        verificationcodeTel = json.loads(response_codeTe).get("data").get("smsCode")
+        print(verificationcodeTel)
+
     return verificationcodeTel
 
 

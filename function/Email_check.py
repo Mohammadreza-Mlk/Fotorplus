@@ -35,8 +35,8 @@ def Email_check(driver_SamsungA71, TelegramApp):
             BackspaceButton = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                     value='//android.view.ViewGroup/android.widget.ImageView')
 
-            for BackspaceButtonCount in range(2):
-                touch.long_press(BackspaceButton).wait(1).release().perform()
+            for BackspaceButtonCount in range(15):
+                driver_SamsungA71.long_press_keycode(67)
             
     except:
         print("another Email registered Before")
@@ -95,9 +95,9 @@ def Email_check(driver_SamsungA71, TelegramApp):
             print(" gmail notif not found")
         if gmailAppNotif or gmailApp :
             
-            time.sleep(5)
+            time.sleep(1)
             driver_SamsungA71.tap([(960, 180)])
-            time.sleep(3)
+            time.sleep(2)
             try:
                 EmailForGetCode = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                 value=f'//android.widget.TextView[@resource-id="com.google.android.gm:id/og_secondary_account_information" and @text="{Email}"]')
@@ -128,19 +128,19 @@ def Email_check(driver_SamsungA71, TelegramApp):
             driver_SamsungA71.tap([(500, 500)])
             time.sleep(3)
             
-            driver_SamsungA71.execute_script('mobile: longClickGesture', {'x':385, 'y': 840, 'duration': 1000})
+            driver_SamsungA71.execute_script('mobile: longClickGesture', {'x':385, 'y': 820, 'duration': 1000})
 
             # touch.long_press(x=385, y=840).release().perform()
             time.sleep(3)
-            driver_SamsungA71.tap([(120, 780)])
+            driver_SamsungA71.tap([(150, 780)])
             # touch.tap(x=120, y=780).release().perform()
-            time.sleep(3)
+            time.sleep(2)
 
             Back_in_email_chat = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                                 value='//android.widget.ImageButton[@content-desc="Navigate up"]')
             Back_in_email_chat.click()
             driver_SamsungA71.press_keycode(3)
-            time.sleep(4)
+            time.sleep(1.5)
 
             TelegramApp = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                                 value='//android.widget.TextView[@content-desc="Telegram"]')

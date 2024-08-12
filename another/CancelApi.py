@@ -1,8 +1,8 @@
 import requests
 import json,time
 
-def CancelNumber():
-    activationId=229482604
+def CancelNumber(activationId):
+     
     print(activationId)
     headers = {'activationId': f'{activationId}'}
         
@@ -20,4 +20,3 @@ def CancelNumber():
         print(CancelBuyRequest.text)
 # فراخوانی تابع GetNumber
 
-CancelNumber()
