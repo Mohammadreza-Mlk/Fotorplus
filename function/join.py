@@ -3,7 +3,6 @@ from typing import Any, Dict
 from appium import webdriver
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 import time, random
 
 cap: Dict[str, Any] = {
@@ -19,7 +18,6 @@ url = 'http://localhost:4721'
 driver_SamsungA71 = webdriver.Remote(url, options=AppiumOptions().load_capabilities(cap))
 
 def RandomName(driver_SamsungA71):
-    touch = TouchAction(driver_SamsungA71)
 
     try: 
         global Account_names
@@ -47,7 +45,6 @@ def RandomName(driver_SamsungA71):
             SearchInput.send_keys(account_name)
             time.sleep(2)
             print("12")
-            touch.tap(x=400, y=840).release().perform()
             time.sleep(1)
             print("12")
            

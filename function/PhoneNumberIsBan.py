@@ -2,7 +2,6 @@ from typing import Any, Dict
 from appium import webdriver
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 import time
 
 url = 'http://localhost:4721'
@@ -18,8 +17,7 @@ cap: Dict[str, Any] = {
 
 # driver_SamsungA71 = webdriver.Remote(url, options=AppiumOptions().load_capabilities(cap))
 def PhonenNumberBan(driver_SamsungA71):
-    touch = TouchAction(driver_SamsungA71)
-    
+     
     print("start Check Banned")
    
     try:
@@ -46,8 +44,7 @@ def PhonenNumberBan(driver_SamsungA71):
         
         
 def InvalidPhonenNumber(driver_SamsungA71):
-    touch = TouchAction(driver_SamsungA71)
-    
+     
     print("start Check Invalid")
      
     try:
@@ -72,6 +69,25 @@ def InvalidPhonenNumber(driver_SamsungA71):
     except :
         print("####  Phone number  is True  ####")
         return False
-        
+    try:
+        time.sleep(2)
+        InvalidPhonenNumber = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
+                                                value='//android.widget.TextView[@text="Wrong format"]')
 
-# PhonenNumberBan()
+        if InvalidPhonenNumber:
+            okButtonBanned = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
+                                                    value='//android.widget.TextView[@text="OK"]')
+            print("InvalidPhonenNumber")
+            okButtonBanned.click()
+            time.sleep(1)
+            BackspaceButton = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
+                                                    value='//android.view.ViewGroup/android.widget.ImageView')
+
+            for BackspaceButtonCount in range(2):
+                element_coord = BackspaceButton.location
+                driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+1, 'y': element_coord['y']+1, 'duration': 1300})
+                # touch.long_press(BackspaceButton).wait(1).release().perform()
+            return True
+    except :
+        print("####  Phone number  is True  ####")
+        return False

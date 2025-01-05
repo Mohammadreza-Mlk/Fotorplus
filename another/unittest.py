@@ -2,12 +2,13 @@ from appium import webdriver
 from typing import Any, Dict
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
-import time
- 
-url = 'http://localhost:4721'
+import sys, time, os
+from appium.options.android import UiAutomator2Options
 
-cap: Dict[str, Any] = {
+  
+appium_server = 'http://localhost:4721'
+
+desired_caps: Dict[str, Any] = {
     'platformName': 'Android',
     'automationName': 'uiautomator2',
     'deviceName': 'SamsungA71',
@@ -15,17 +16,18 @@ cap: Dict[str, Any] = {
     'language': 'en',
     'locale': 'us'
 }
+appium_options = UiAutomator2Options().load_capabilities(desired_caps)
+driver_SamsungA71 = webdriver.Remote(appium_server, options=appium_options)
+ 
+try:
+    AddAccount = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
+                                                        value='//android.widget.TextView[@text="Add Account"]')
+    print("addaccout")
+        
+    
+except:
 
-######## test for sms
-driver_SamsungA71 = webdriver.Remote(url, options=AppiumOptions().load_capabilities(cap))
-touch = TouchAction(driver_SamsungA71)
-time.sleep(5)
-phone = '995568693499'
-elements = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
-                                         value='//android.widget.TextView[@text="Get the code via SMS"]')
-time.sleep(3)
-if elements:
-    print("dish")
-    GetSms = driver_SamsungA71.find_elements_by_xpath("//*[starts-with(@text, 'Get the')]")
-    time.sleep(3)
-    GetSms.click()
+     
+    driver_SamsungA71.press_keycode(3)
+   
+     

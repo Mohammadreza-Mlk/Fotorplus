@@ -3,7 +3,6 @@ from appium import webdriver
 from typing import Any, Dict, sys
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 import sys, time
 sys.path.append("../TelegramAuto")
 from function.UnistallApp import UnistalTelegram
@@ -21,8 +20,7 @@ cap: Dict[str, Any] = {
 }
  
 def TooManyAttempts(driver_SamsungA71):
-    touch = TouchAction(driver_SamsungA71)
-
+ 
     try:
         
             
@@ -37,8 +35,7 @@ def TooManyAttempts(driver_SamsungA71):
             driver_SamsungA71.press_keycode(3)
             time.sleep(2)
             
-        
-        touch.long_press(x=405, y=295).release().perform()
+        driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': 405, 'y': 295, 'duration': 1000})
         time.sleep(2)
         
         UnistalTelegram(driver_SamsungA71)

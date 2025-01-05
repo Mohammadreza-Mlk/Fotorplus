@@ -1,11 +1,9 @@
 from typing import Any, Dict
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 import sys, time
 sys.path.append("../TelegramAuto")
 
 def UnistalTelegram(driver_SamsungA71):
-        touch = TouchAction(driver_SamsungA71)
         driver_SamsungA71.press_keycode(3)
         try:
                 time.sleep(2)
@@ -16,8 +14,14 @@ def UnistalTelegram(driver_SamsungA71):
                     # telegramBetaApp = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                     #                                         value='//android.widget.TextView[@content-desc="Telegram Beta"]')
                     time.sleep(2)
-                    touch.long_press(x=921, y=1024).release().perform()
-                    
+                    TelegramApp = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
+                                                value='//android.widget.TextView[@content-desc="Telegram"]')
+    
+                    element_coord = TelegramApp.location
+                    driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': element_coord['x']+100, 'y': element_coord['y']+100, 'duration': 1100})
+
+                        # driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': 921, 'y': 1024, 'duration': 1000})
+                     
                     time.sleep(2)
                     unistallTelegram = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                                             value='//android.widget.FrameLayout[@content-desc="Uninstall, Button"]/android.widget.LinearLayout')

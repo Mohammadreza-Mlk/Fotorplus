@@ -1,6 +1,5 @@
 from typing import Any, Dict
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 import sys, time, requests
 
 sys.path.append("../TelegramAuto")
@@ -19,7 +18,7 @@ url = 'http://localhost:4721'
 
 def Calling(driver_SamsungA71, activationId, phoneNumber):
     try:
-        touch = TouchAction(driver_SamsungA71)  
+         
         print("start check_For_Calling_Code")
         time.sleep(2)
         GetCodeInCall = driver_SamsungA71.find_element(by=AppiumBy.XPATH,

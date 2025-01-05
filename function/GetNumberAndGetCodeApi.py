@@ -3,7 +3,6 @@ from appium import webdriver
 from typing import Any, Dict
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 from another.CancelApi import CancelNumber
 sys.path.append("../TelegramAuto")
 from function.UnistallApp import UnistalTelegram
@@ -19,11 +18,8 @@ cap: Dict[str, Any] = {
     'language': 'en',
     'locale': 'us'
 }
-
-
 global activationId
-activationId="22222222222" 
-
+activationId="" 
 def GetNumberApi():
     GetNumber = 'https://fotorplusapi.membersgram.com/getnumber'
     response = requests.get(GetNumber)
@@ -41,48 +37,31 @@ def GetNumberApi():
     print("PhoneNumber in func = " f'{PhoneNumber}')
     print("activationId in func = " f'{activationId}')
     return(PhoneNumber, activationId)
-
-
 def GetVerifycode(activationId, driver_SamsungA71):
-    # verifyCode = ""
-    
     print('activation =' f'{activationId}')
-    touch = TouchAction(driver_SamsungA71)
-
-
-
-
-
-
-
     time.sleep(15)
     RequestForVerifyCode = 'https://fotorplusapi.membersgram.com/getcode'
     headers = {'activationId': f'{activationId}'}
     response_verify = requests.get(RequestForVerifyCode, headers=headers)
     print(response_verify.text)
     response_verifyCode = json.loads(response_verify.text).get("status")
-    
     if response_verifyCode == 'STATUS_WAIT_CODE':
         print(f'   {response_verifyCode}   ')
-         
-        
         time.sleep(2)
         driver_SamsungA71.press_keycode(3)
         UnistalTelegram(driver_SamsungA71)
-        InstallTelegram(driver_SamsungA71)
-        Permission(driver_SamsungA71)
-        
-            
+        headers = {'activationId': f'{activationId}'}
+        CancelBuyPoneNumberApi = 'https://fotorplusapi.membersgram.com/cancelPurchase'
+        CancelBuyRequest = requests.get(CancelBuyPoneNumberApi, headers=headers)
+        time.sleep(2)
+        print(CancelBuyRequest.text)
+        ResponseCancelBuyRequest = json.loads(CancelBuyRequest.text).get("status") 
+        print(ResponseCancelBuyRequest)
+        InstallTelegram(driver_SamsungA71)  
     else:
         print(' Verification code received.')
         response_codeTe = response_verify.text  # ذخیره محتوای دریافتی در متغیر
         print('Response ', response_codeTe)
         verificationcodeTel = json.loads(response_codeTe).get("data").get("smsCode")
         print(verificationcodeTel)
-
     return verificationcodeTel
-
-
-    
-# GetNumberApi()
-# GetVerifycode(activationId)

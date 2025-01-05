@@ -2,7 +2,7 @@ from appium import webdriver
 from typing import Any, Dict
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
+
 import sys, time
 sys.path.append("../TelegramAuto")
 url = 'http://localhost:4721'
@@ -49,19 +49,21 @@ def check_For_Calling_Code(driver_SamsungA71):
                     print("GetCodeInSms click")
                     GetCodeInSms.click()
                     
-                    touch = TouchAction(driver_SamsungA71)
-                    print("x, y  click")
-                    touch.tap(x=500, y=1650).release().perform()
+                    driver_SamsungA71.tap([(500, 1650)])
+                    
+                    
                 else:
                     
                     time.sleep(4)
-                    touch.tap(x=499, y= 1649).release().perform()
+                    driver_SamsungA71.tap([(499, 1649)])
+                     
       
             except:
                 print("code via sms not found")
             print("x, y  click2")
             time.sleep(2)
-            touch.long_press(x=500, y=1650).release().perform()
+            driver_SamsungA71.execute_script('mobile: longClickGesture', {'x': 500, 'y': 1650, 'duration': 1000})
+             
             print("x, y  long preess done")
             time.sleep(10)
             

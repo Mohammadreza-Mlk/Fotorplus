@@ -1,5 +1,4 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 from appium import webdriver
 from function.installTelegram import InstallTelegram
 
@@ -12,14 +11,14 @@ from function.UnistallApp import UnistalTelegram
 import time
 
 def LogOut(driver_SamsungA71):
-    touch = TouchAction(driver_SamsungA71)  
     try: #log out from account
         
         NavigationMenu = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                             value='//android.widget.ImageView[@content-desc="Open navigation menu"]')
         NavigationMenu.click()
         time.sleep(2)
-        touch.tap(x=260, y=1360).release().perform()
+        driver_SamsungA71.tap([(260, 1360)])
+         
         time.sleep(2)
         
         CircleForOpenMenu = driver_SamsungA71.find_element(by=AppiumBy.XPATH,

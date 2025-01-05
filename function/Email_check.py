@@ -2,7 +2,6 @@ from appium import webdriver
 from typing import Any, Dict
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 import time, random
  
 cap: Dict[str, Any] = {
@@ -19,7 +18,6 @@ url = 'http://localhost:4721'
 
 def Email_check(driver_SamsungA71, TelegramApp):
     time.sleep(1)
-    touch = TouchAction(driver_SamsungA71)  
     try:
         print("check another Email registered Before")
         time.sleep(1)
@@ -130,10 +128,8 @@ def Email_check(driver_SamsungA71, TelegramApp):
             
             driver_SamsungA71.execute_script('mobile: longClickGesture', {'x':385, 'y': 820, 'duration': 1000})
 
-            # touch.long_press(x=385, y=840).release().perform()
             time.sleep(3)
             driver_SamsungA71.tap([(150, 780)])
-            # touch.tap(x=120, y=780).release().perform()
             time.sleep(2)
 
             Back_in_email_chat = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
@@ -147,10 +143,8 @@ def Email_check(driver_SamsungA71, TelegramApp):
             TelegramApp.click()
             time.sleep(2)
             driver_SamsungA71.execute_script('mobile: longClickGesture', {'x':270, 'y': 950, 'duration': 1000})
-            # touch.long_press(x=270, y=950).release().perform()
             time.sleep(1)
             driver_SamsungA71.tap([(240, 824)])
-            # touch.tap(x=240, y=824).release().perform()
             
                     
             # EmailNotAllowed = driver_SamsungA71.find_element(by=AppiumBy.XPATH,

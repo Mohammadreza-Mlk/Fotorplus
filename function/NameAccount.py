@@ -1,6 +1,5 @@
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
-
+ 
 import random,time
 from typing import Any, Dict
 from watchlog import Watchlog
@@ -18,8 +17,7 @@ url = 'http://localhost:4721'
 
 
 def RandomName(driver_SamsungA71):
-    touch = TouchAction(driver_SamsungA71)
-
+ 
     try: 
         global Account_names
         Account_names = [

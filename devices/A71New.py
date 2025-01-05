@@ -2,7 +2,6 @@ from appium import webdriver
 from typing import Any, Dict
 from appium.options.common import AppiumOptions
 from appium.webdriver.common.appiumby import AppiumBy
-from appium.webdriver.common.touch_action import TouchAction
 import sys, time, os
 from appium.options.android import UiAutomator2Options
 
@@ -21,7 +20,6 @@ from function.CheckVerfiCodeSms import Check_Verify_code
 from function.NameAccount import RandomName
 from function.TooManyAttempts import TooManyAttempts
 from function.PlusMessenger import PlusMessanger
-from function.FotorPlus import FotorPlus
 from function.permission import Permission
 from watchlog import Watchlog
 watchlog_instance = Watchlog()
@@ -47,32 +45,21 @@ desired_caps: Dict[str, Any] = {
 appium_options = UiAutomator2Options().load_capabilities(desired_caps)
 driver_SamsungA71 = webdriver.Remote(appium_server, options=appium_options)
    
-# driver_SamsungA71 = webdriver.Remote(url, options=AppiumOptions().load_capabilities(cap))
-touch = TouchAction(driver_SamsungA71)
 phoneNumber = ""
 activationId = ""
-
-# TelegramApp =  driver_SamsungA71.find_element(by=AppiumBy.XPATH,
-#                                             value='//android.widget.TextView[@content-desc="Telegram Beta"]')
-
 time.sleep(1)
 TelegramApp = InstallTelegram(driver_SamsungA71) 
 time.sleep(2)
-# Permission(driver_SamsungA71)
 print("start create Account")
 for i in range(20):
-             
-    # for i in range(1):
     try:
         time.sleep(1)
         StartMessage = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
                                     value='//android.widget.TextView[@text="Start Messaging"]')
         StartMessage.click()
         print(" start button clicked")
-
     except:
         print("no start button")
-        
     try:
         time.sleep(2)
         PhoneNumberInput = driver_SamsungA71.find_element(by=AppiumBy.XPATH,
@@ -81,8 +68,6 @@ for i in range(20):
             print("PhoneNumberInput found! Start phone number giving :)")
             
             phoneNumber,activationId = GetNumberApi()
-            # print("phoneNumber A71 = " f'{phoneNumber}')
-            # print("activationId A71 = " f'{activationId}')
             time.sleep(2)
             PhoneNumberInput.send_keys(phoneNumber)
             time.sleep(2)
@@ -110,7 +95,7 @@ for i in range(20):
         time.sleep(3)
         anotherTelegram = check_for_send_verify_code_to_another_telegram_sesseion(driver_SamsungA71)
         if not anotherTelegram:
-            # for i in range (2):
+            
                 time.sleep(1)
                 print(activationId)
                 resultCalling = Calling(driver_SamsungA71, activationId, phoneNumber)
@@ -122,9 +107,5 @@ for i in range(20):
                         RandomName(driver_SamsungA71)
                         time.sleep(6)
                         PlusMessanger(driver_SamsungA71, phoneNumber, TelegramApp)
-                        # FotorPlus(driver_SamsungA71, phoneNumber)
-                        # time.sleep(6)
-                        # LogOut(driver_SamsungA71)
         else:
             print("another telegram session in phone number")
-    # time.sleep(2)40610
